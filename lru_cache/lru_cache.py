@@ -1,4 +1,4 @@
-from doubly_linked_list import DoublyLinkedList
+from doubly_linked_list import DoublyLinkedList, ListNode
 from collections import OrderedDict
 class LRUCache:
     """
@@ -24,7 +24,8 @@ class LRUCache:
     def get(self, key):
         try:
             value = self.dict.pop(key)
-            self.storage.add_to_tail({key: value})
+            node = ListNode(key)
+            self.storage.move_to_end(node)
             self.dict[key] = value
             return value
         except KeyError:
@@ -47,4 +48,4 @@ class LRUCache:
             if len(self.dict) >= self.limit:
                 self.dict.popitem(last=False)
         self.dict[key] = value
-        self.storage.add_to_tail({key: value})
+        self.storage.add_to_tail(key)
