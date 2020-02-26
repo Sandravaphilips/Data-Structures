@@ -1,6 +1,6 @@
 import sys
 sys.path.append('../queue_and_stack')
-from doubly_linked_list import DoublyLinkedList
+from doubly_linked_list import DoublyLinkedList, ListNode
 
 
 class BinarySearchTree:
@@ -45,7 +45,7 @@ class BinarySearchTree:
     def get_max(self):
         return self.storage.get_max()
 
-    def iter(self):
+    def iter(self):        
         current = self.storage.head
         while current:
             item = current.value
@@ -63,25 +63,76 @@ class BinarySearchTree:
     # Print all the values in order from low to high
     # Hint:  Use a recursive, depth first traversal
     def in_order_print(self, node):
-        pass
+        if node:
+            self.in_order_print(node.left)
+            print(node.value)
+            self.in_order_print(node.right)
+        else: return
+
+
 
     # Print the value of every node, starting with the given node,
     # in an iterative breadth first traversal
     def bft_print(self, node):
-        pass
+        if node:
+            node_list = DoublyLinkedList()
+            node_list.add_to_head(node)
+
+            while len(node_list) > 0:
+                current = node_list.remove_from_head()
+                print(current.value)
+
+                if current.left:
+                    node_list.add_to_tail(current.left)
+                if current.right:
+                    node_list.add_to_tail(current.right)
+        else: return
+
 
     # Print the value of every node, starting with the given node,
     # in an iterative depth first traversal
     def dft_print(self, node):
-        pass
+        if node:            
+            node_list = DoublyLinkedList()
+            node_list.add_to_head(node)
+
+            while len(node_list) > 0:
+                current = node_list.remove_from_head()
+                print(current.value)
+
+                if current.left:
+                    node_list.add_to_head(current.left)
+                if current.right:
+                    node_list.add_to_head(current.right)
+        else: return
 
     # STRETCH Goals -------------------------
     # Note: Research may be required
 
     # Print Pre-order recursive DFT
     def pre_order_dft(self, node):
-        pass
+        if node:
+            print(node.value)
+            self.pre_order_dft(node.left)
+            self.pre_order_dft(node.right)
+        else: return
 
     # Print Post-order recursive DFT
     def post_order_dft(self, node):
-        pass
+        if node:
+            self.post_order_dft(node.left)
+            self.post_order_dft(node.right)
+            print(node.value)
+        else: return
+
+
+bst = BinarySearchTree(1)
+bst.insert(8)
+bst.insert(5)
+bst.insert(7)
+bst.insert(6)
+bst.insert(3)
+bst.insert(4)
+bst.insert(2)
+
+bst.dft_print(bst)
